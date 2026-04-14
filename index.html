@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Impossible RPS Pro</title>
+    <style>
+        body {
+            margin: 0;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 40px;
+        }
+
+        #buttons {
+            margin-top: 40px;
+        }
+
+        button {
+            padding: 20px 30px;
+            margin: 10px;
+            font-size: 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        #result {
+            margin-top: 40px;
+            font-size: 24px;
+            min-height: 100px;
+        }
+
+        #score {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Impossible Rock Paper Scissors 😈</h1>
+<p>Try to beat it... good luck.</p>
+
+<div id="buttons">
+    <button onclick="play('rock')">🪨 Rock</button>
+    <button onclick="play('paper')">📄 Paper</button>
+    <button onclick="play('scissors')">✂️ Scissors</button>
+</div>
+
+<div id="result"></div>
+<div id="score">Wins: 0 | Losses: 0</div>
+
+<script>
+let wins = 0;
+let losses = 0;
+
+function getCounterMove(player) {
+    if (player === "rock") return "paper";
+    if (player === "paper") return "scissors";
+    if (player === "scissors") return "rock";
+}
+
+function play(player) {
+    document.getElementById("result").innerHTML = "🤔 Thinking...";
+
+    setTimeout(() => {
+        let computer;
+
+        // 90% chance to beat player, 10% to lose (to feel fair)
+        if (Math.random() < 0.9) {
+            computer = getCounterMove(player);
+        } else {
+            // rare fake win for player
+            if (player === "rock") computer = "scissors";
+            if (player === "paper") computer = "rock";
+            if (player === "scissors") computer = "paper";
+        }
+
+        let resultText;
+
+        if (computer === getCounterMove(player)) {
+            losses++;
+            resultText = "💀 You Lose";
+        } else {
+            wins++;
+            resultText = "🎉 You Win (lucky...)";
+        }
+
+        document.getElementById("result").innerHTML =
+            "You chose: " + player + "<br>" +
+            "Computer chose: " + computer + "<br><br>" +
+            resultText;
+
+        document.getElementById("score").innerHTML =
+            "Wins: " + wins + " | Losses: " + losses;
+
+    }, 800); // delay makes it feel smarter
+}
+</script>
+
+</body>
+</html>
